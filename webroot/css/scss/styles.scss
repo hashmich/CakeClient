@@ -1,0 +1,337 @@
+
+@import "variables";
+
+
+
+@import "mixins";
+
+
+/* resetter */
+* {
+	@include resetter;
+}
+
+/* basics */
+body {
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	color: $font_color;
+	background-color: $background_color;
+	@include resetter;
+}
+h1, h2, h3, h4 {
+	margin-bottom: 0.9em;
+	font-weight: bold;
+	margin-top: 2em;
+	&:first-child {
+		margin-top: 0;
+	}
+}
+h1 {
+	font-size: 2em;
+}
+h2 {
+	font-size: 1.5em;
+}
+h3 {
+	font-size: 1.2em;
+}
+h4 {
+	font-size: 1em;
+}
+ul, li {
+	margin: 0 0 0 12px;
+}
+p {
+	margin: 0 0 1em 0;
+}
+img {
+	border: none;
+}
+a {
+	color: $link_color;
+	text-decoration: underline;
+	&:hover {
+		color: $link_hover_color;
+		text-decoration:none;
+	}
+}
+
+.left {float: left;}
+.right {float: right;}
+.fnone {float: none;}
+.clearfix {
+	@include clearfix;
+}
+.noclear {
+	clear: none;
+}
+
+/* A flexible, but simple two-columns layout */
+/* One can include the following classes in a container div with fixed width to fix the columns width as well. */
+/* With 30px margin this will work down to 375px width (8% => 30px) */
+.col {
+	&:first-child {
+		margin-right: 30px;
+	}
+}
+.wide {
+	width: 60%;
+}
+.narrow {
+	width: 32%;
+}
+.half {
+	width: 46%;
+}
+.clear, .clearer {
+	clear: both;
+}
+
+
+/* horizontal scrolling of oversize elements */
+.scroll_wrapper {
+	width: 100%;
+	overflow-x: auto;
+	clear: both;
+	margin: 0 0 1.5em;
+}
+
+
+
+/* layout */
+#container {
+	position: relative;
+}
+
+#header {
+	color: $header_font_color;
+	padding: 0;
+	background-color: $content_background_color;
+	margin-bottom: 2px;
+	position: relative;
+	overflow: hidden;
+	@include clearfix;
+	
+	img {
+		margin: 0;
+		display: block;
+	}
+	
+	h1 {
+		margin: 0;
+		padding: 27px 50px 0;
+		background-color: $header_background_color;
+		margin-left: $menu_width;
+		border-left: 2px solid $background_color;
+		padding-bottom: 1000px; margin-bottom: -1000px;
+	}
+	
+	.login_info {
+		float: right;
+		margin-right: 40px;
+		margin-top: 8px;
+		border: 1px solid $border_color;
+		padding: 1em 2em 0;
+		
+		p {
+			text-align: center;
+		}
+		
+		a {
+			color: $header_font_color;
+			text-decoration: none;
+			&:hover {
+				color: $link_hover_color;
+			}
+		}
+	}
+}
+
+/* equal height fake column for menu & content - see http://css-tricks.com/fluid-width-equal-height-columns/ - the Nicolas Gallagher Method */
+$col_min_height: 800px;
+.columns, #menu, #content {
+	min-height: $col_min_height;
+}
+.columns {
+	position: relative;
+	z-index: 1;
+	width: 100%;
+	overflow: hidden;
+	
+	/* the menu's background - fake column */
+	&:before, &:after {
+		content: "";
+		position: absolute;
+		z-index: -1;
+		background-color: $menu_background_color;
+		height: 100%;
+		width: $menu_width;
+		left: 0;
+	}
+	&:after {
+		width: 100%;
+		left: $menu_width + 2px;
+	}
+	
+	#menu {
+		float: left;
+		position: relative;
+		width: $menu_width;
+		padding: 30px 0;
+		min-height: $col_min_height - 30px;
+		@include clearfix;
+		
+		li {
+			margin: 0;
+			display: block;
+			font-weight: bold;
+			font-size: 17px;
+			padding-bottom: 1.9em;
+			list-style: none;
+			&:hover {
+				
+				ul {
+					display: block;
+					
+					li {
+						display: block;
+						float: left;
+						font-size: 10px;
+						list-style: none;
+						margin: 0;
+						margin-top: 0.9em;
+						border-left: 2px solid $link_color;
+						padding: 0 0.5em;
+						&:first-child {
+							border: none;
+							padding-left: 0;
+						}
+						
+						a {
+							color: $actions_link_color;
+							&:hover {
+								color: $actions_link_hover_color;
+							}
+						}
+					}
+				}
+			}
+			
+			ul {
+				display: none;
+			}
+			
+			a {
+				text-decoration: none;
+				color: $menu_main_link_color;
+				&:hover {
+					color: $menu_main_link_hover_color
+				}
+			}
+		}
+	}
+	
+	#content {
+		padding: 10px 10px 20px;
+		background-color: $content_background_color;
+		margin-left: $menu_width + 2px;
+		overflow-x: hidden;
+		@include clearfix;
+		
+		
+		.associations,
+		.filter,
+		.actions {
+			margin-bottom: 2em;
+			
+			ul {
+				li {
+					padding: 0;
+					display: inline-block;
+					border-left: 2px solid $link_color;
+					padding: 0 0.8em 0 0.8em;
+					margin: 0;
+					font-size: 90%;
+					&:first-child {
+						border: none;
+						padding-left: 0;
+					}
+				}
+			}
+		}
+		.actions {
+			a {
+				color: $actions_link_color;
+				font-weight: bold;
+				&:hover {
+					color: $actions_link_hover_color;
+				}
+			}
+		}
+		
+		
+		@import "content_tables";
+		@import "paging";
+		@import "forms";
+		
+		dl {
+			line-height: 2em;
+			margin: 0em 0em;
+			width: 60%;
+			
+			dt {
+				font-weight: bold;
+				vertical-align: top;
+				float: none;
+				display: block;
+				margin-top: 1em;
+			}
+			
+			dd {
+				margin-left: 1em;
+				vertical-align: top;
+				float: none;
+				display: block;
+				background: $background_color_2;
+				padding: 5px 10px;
+				border: 1px solid $border_color;
+			}
+		}
+	}
+}
+
+
+
+#footer {
+	text-align: right;
+	clear: both;
+	padding: 30px 50px 30px 270px;
+	background-color: $content_background_color;
+	margin-top: 2px;
+	
+	a {
+		color: #888;
+		font-size: bold;
+		&:hover {
+			color: #aaa;
+		}
+	}
+}
+
+/* cake's default session flash output - there's also a #authMessage... */
+.message {
+	font-family: Monaco, Consolas, "Courier New", monospaced;
+	background: #ffcc00;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	padding: 8px 10px;
+	color: #000;
+	display: inline-block;
+	-moz-box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.25), 0 1px 0 rgba(255, 255, 255, 0.5);
+	-webkit-box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.25), 0 1px 0 rgba(255, 255, 255, 0.5);
+	box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.25), 0 1px 0 rgba(255, 255, 255, 0.5);
+	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+	margin-bottom: 2em;
+}
