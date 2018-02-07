@@ -33,13 +33,7 @@
 			echo $this->Form->input($field, $options);
 		}
 		
-		if($this->data['CcConfigAction']['has_view']) {
-			echo $this->Form->input('CcConfigActionsViewsAction', array(
-				'type' => 'select',
-				'multiple' => 'checkbox',
-				'label' => 'Link Actions'
-			));
-		}
+		
 		
 		echo $this->Form->end('submit');
 	}
