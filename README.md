@@ -9,20 +9,24 @@ Install as a submodule using:
 git submodule add https://github.com/hashmich/CakeClient.git app/Plugin/Cakeclient
 
 
-MODELS, CONTROLLERS
+## Models & Controllers
 
-... don't need to be neccessarily existant. Cake generates them dynamically for us 
-and CakeClient CrudComponent provides the most basic functionality for them. 
+... don't need to be neccessarily existant. Cake generates them dynamically 
+and CakeClient CrudComponent provides all required functionality for them. 
 
-But have an eye on naming and how CakeClient & Cake figure out controllernames, modelnames and tablenames again 
-from the table name!
-table_names -> controller_names -> model_name -> table_names => ok
-table_name -> controller_name -> model_name -> table_names => !ok
-If a table name for what reason ever is singular, the model classname MUST reflect the table name camelCased 
-and explicitly define the table name for everything to work. 
-This is also in effect for model relations. 
 
-as long the corresponding table exists (if a table name is singular, eg. "config", this is a problem). 
-Cake generates them dynamically for us. 
-CakeClient CrudComponent provides the most basic functionality for them. 
+## Database Design Conventions
 
+To figure out controller and model names, primary keys and entity relations, CakePhp heavily relies on conventions. 
+Please read their documentation concerning that.
+
+Basically, table names have to be in plural. 
+The Inflector class is being used to derive the class names according to the schema below:
+
+table_names -> TableNamesController -> TableName -> table_names
+
+blog_posts -> BlogPostsController -> BlogPost -> blog_posts
+
+Primary key name should be "id".
+
+Foreign keys should be "<singular_foreign_table_name>_id", eg. "blog_post_id". 
