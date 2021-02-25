@@ -1,15 +1,15 @@
 <?php
 class ConfigurationComponent{
-	
+
 	public function getConfig($config_name = null) {
-		
+
 		$user = $this->controller->Session->read('User');
 		if($user AND !empty($user['is_admin']) AND !empty($user['debug_session'])) {
 			Configure::write('debug', 2);
 		}
-		
+
 		$configuration = Cache::read('App.config', 'default');
-		if($configuration === false OR Configure::read('debug') > 0) {
+		if($configuration === false OR Configure::read('debug') > 1) {
 			$this->controller->loadModel('CcConfigConfiguration');
 			$configuration = $this->controller->CcConfigConfiguration->find('all', array());
 			if(!empty($configuration['CcConfigConfiguration'])) {
@@ -38,21 +38,21 @@ class ConfigurationComponent{
 				}
 			}
 		}
-		
+
 		if(!empty($configuration) AND $configuration['caching']) {
 			Cache::write('App.config', $configuration, 'default');
 		}
 	}
-	
-	
-	
+
+
+
 	public function initialize(Controller $controller) {
 		$this->controller = $controller;
 		$this->getConfig();
 	}
-	
-	
-	
-	
+
+
+
+
 }
 ?>
